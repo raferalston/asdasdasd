@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas width="400" height="400" id="canvas"></canvas>
+
+    <script>
+        let ctx = canvas.getContext('2d')
+        
+        let canvasHeight = canvas.clientHeight
+        let canvasWidth = canvas.clientWidth
+        let posX = canvasWidth / 2
+        let posY = canvasHeight / 2
+        let shuttleSize = 40
+        let shuttleAngle = 0 // 0 deg
+        // let shuttleAngle = Math.PI / 4 // 45 deg
+        
+        
+        function start() {
+            let shuttleHeadX = posX + Math.cos(shuttleAngle)
+            let shuttleHeadY = posY + Math.sin(shuttleAngle)      
+            let shuttleTailXleft = shuttleHeadX - (shuttleSize * Math.sin(shuttleAngle + 1.0472))
+            let shuttleTailYleft = shuttleHeadY - (shuttleSize * Math.cos(shuttleAngle + 1.0472))
+            let shuttleTailXright = shuttleHeadX - (shuttleSize * Math.sin(shuttleAngle + 2.0944))
+            let shuttleTailYright = shuttleHeadY - (shuttleSize * Math.cos(shuttleAngle + 2.0944))
+
+            ctx.clearRect(0, 0, canvasHeight, canvasWidth)
+            ctx.beginPath();
+
+            ctx.moveTo(shuttleHeadX+ Math.cos(shuttleAngle) * 20, shuttleHeadY - Math.sin(shuttleAngle) * 20);
+            ctx.lineTo(shuttleTailXleft, shuttleTailYleft);
+            ctx.lineTo(shuttleTailXright, shuttleTailYright);
+            ctx.fill();
+
+            shuttleAngle += 0.01
+            
+            requestAnimationFrame(start);
+
+        }
+        requestAnimationFrame(start);
+
+    </script>
+</body>
+</html>
